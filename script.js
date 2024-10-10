@@ -16,7 +16,9 @@ let rolls = 0;
 let score = 0;
 let round = 1;
 
-const rollingDice = () => {
+const rollDice = () => {
+    diceValuesArr = [];
+
     for(let i = 5; i > 0; i--){
         diceValuesArr.push(Math.floor(Math.random() * 6 + 1));
     }
@@ -25,9 +27,25 @@ const rollingDice = () => {
     })
 }
 
+const updateStats = () => {
+    rollsElement.textContent = rolls;
+    roundElement.textContent = round;
+  };
+
+  const updateRadioOption = (index, score) => {
+    scoreInputs[index].disabled = false;
+    scoreInputs[index].value = score;
+    scoreSpans[index].textContent = `, score = ${score}`;
+  };
+
 rollDiceBtn.addEventListener('click', () => {
-    diceValuesArr = [];
-    rollingDice();
+    if (rolls === 3) {
+    alert("You have made three rolls this round. Please select a score.");
+  } else {
+    rolls++;
+    rollDice();
+    updateStats();
+  }
 });
 
 
