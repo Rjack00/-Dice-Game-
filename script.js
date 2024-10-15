@@ -17,26 +17,35 @@ let score = 0;
 let round = 1;
 
 const rollDice = () => {
-    diceValuesArr = [];
+  diceValuesArr = [];
 
-    for(let i = 5; i > 0; i--){
-        diceValuesArr.push(Math.floor(Math.random() * 6 + 1));
-    }
-    listOfAllDice.forEach((dieElement, index) => {
-        dieElement.textContent = diceValuesArr[index];
-    })
-}
+  for (let i = 0; i < 5; i++) {
+    const randomDice = Math.floor(Math.random() * 6) + 1;
+    diceValuesArr.push(randomDice);
+  };
+
+  listOfAllDice.forEach((dice, index) => {
+    dice.textContent = diceValuesArr[index];
+  });
+};
 
 const updateStats = () => {
     rollsElement.textContent = rolls;
     roundElement.textContent = round;
   };
 
-  const updateRadioOption = (index, score) => {
-    scoreInputs[index].disabled = false;
-    scoreInputs[index].value = score;
-    scoreSpans[index].textContent = `, score = ${score}`;
-  };
+const updateRadioOption = (index, score) => {
+  scoreInputs[index].disabled = false;
+  scoreInputs[index].value = score;
+  scoreSpans[index].textContent = `, score = ${score}`;
+};
+
+const updateScore = (selectedValue, achieved) => {
+  score += parseInt(selectedValue);
+  totalScoreElement.textContent = score;
+
+  scoreHistory.innerHTML += `<li>${achieved} : ${selectedValue}</li>`;
+};
 
 const getHighestDuplicates = (arr) => {
   const counts = {};
