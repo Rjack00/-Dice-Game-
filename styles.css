@@ -7,11 +7,12 @@
 }
 
 :root {
-  --dark-grey: #1b1b32;
-  --light-grey: #f5f6f7;
+  --charcoal: #111111;
+  --off-white: #f5f6f7;
   --black: #000;
   --white: #fff;
   --grey: #3b3b4f;
+  --light-grey: #d5d5d8;
   --golden-yellow: #fecc4c;
   --yellow: #ffcc4c;
   --gold: #feac32;
@@ -20,11 +21,11 @@
 }
 
 body {
-  background-color: var(--dark-grey);
+  background-color: var(--charcoal);
 }
 
 header {
-  color: var(--light-grey);
+  color: var(--off-white);
   text-align: center;
 }
 
@@ -35,7 +36,7 @@ h1 {
 
 .rules-container {
   display: none;
-  background-color: var(--light-grey);
+  background-color: var(--off-white);
   color: var(--black);
   width: 50%;
   margin: 20px auto;
@@ -77,6 +78,7 @@ main {
   margin-right: 15px;
   border: 4px solid var(--black);
   padding: 10px;
+  background-color: var(--off-white);
 }
 
 .rounds-text {
