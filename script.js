@@ -47,10 +47,10 @@ const updateScore = (selectedValue, achieved) => {
   scoreHistory.innerHTML += `<li>${achieved} : ${selectedValue}</li>`;
 };
 
-const getHighestDuplicates = (arr) => {
+const getHighestDuplicates = (arrOfNums) => {
   const counts = {};
 
-  for (const num of arr) {
+  for (const num of arrOfNums) {
     if (counts[num]) {
       counts[num]++;
     } else {
@@ -60,7 +60,7 @@ const getHighestDuplicates = (arr) => {
 
   let highestCount = 0;
 
-  for (const num of arr) {
+  for (const num of arrOfNums) {
     const count = counts[num];
     if (count >= 3 && count > highestCount) {
       highestCount = count;
@@ -70,7 +70,7 @@ const getHighestDuplicates = (arr) => {
     }
   }
 
-  const sumOfAllDice = arr.reduce((a, b) => a + b, 0);
+  const sumOfAllDice = arrOfNums.reduce((a, b) => a + b, 0);
 
   if (highestCount >= 4) {
     updateRadioOption(1, sumOfAllDice);
@@ -83,11 +83,10 @@ const getHighestDuplicates = (arr) => {
   updateRadioOption(5, 0);
 };
 
-const detectFullHouse = (diceValuesArr) => {
-
+const detectFullHouse = (arrOfNums) => {
   const counts = {};
 
-  for(const num of diceValuesArr) {
+  for(const num of arrOfNums) {
     if(counts[num]) {
       counts[num]++;
     }else {
@@ -96,7 +95,7 @@ const detectFullHouse = (diceValuesArr) => {
   }
 
   const values = Object.values(counts);
-  console.log(values);
+  
   if (values.includes(2) && values.includes(3)){
     updateRadioOption(2, 25);
   }
@@ -133,6 +132,30 @@ const resetGame = () => {
   resetRadioOptions();
 };
 
+const checkForStraights = (arrOfNums) => {
+  const sortedArr = arrOfNums.sort((a,b) => a - b);
+  let consecutive = 1;
+  
+  sortedArr.forEach((num, index) => {
+    const nextNum = index < sortedArr.length -1 ? sortedArr[index + 1] : null;
+    if(nextNum - num === 1) {
+      consecutive += 1;
+    }
+  });
+
+  if(consecutive === 4) {
+    updateRadioOption(3, 30);
+  };
+  
+  if(consecutive === 5) {
+    updateRadioOption(4, 40);
+    updateRadioOption(3, 30);
+  };
+  if(consecutive < 4) {
+    updateRadioOption(5, 0);
+  }
+};
+
 rollDiceBtn.addEventListener('click', () => {
     if (rolls === 3) {
     alert("You have made three rolls this round. Please select a score.");
@@ -143,6 +166,7 @@ rollDiceBtn.addEventListener('click', () => {
     updateStats();
     getHighestDuplicates(diceValuesArr);
     detectFullHouse(diceValuesArr);
+    checkForStraights(diceValuesArr);
   }
 });
 
